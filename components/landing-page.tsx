@@ -29,7 +29,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-950 via-indigo-900 to-gray-900 relative overflow-hidden">
       {/* Background animation */}
-      <BackgroundAnimation />
+      {/* <BackgroundAnimation /> */}
 
       {/* Content overlay with slight transparency */}
       <div className="relative z-10 container mx-auto px-4 py-6 min-h-screen flex flex-col">
