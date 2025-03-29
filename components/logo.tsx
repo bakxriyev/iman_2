@@ -49,10 +49,10 @@ export default function Logo() {
           <span className="bg-pink-600 text-white px-3 py-1 text-lg font-bold rounded-md animate-pulse ml-2">LIVE</span>
         </h2>
 
-        <h1 className="text-4xl md:text-7xl lg:text-6xl mb-2 leading-tight text-white" style={serifStyle}>
+        <h1 className="text-3xl md:text-7xl lg:text-6xl mb-2 leading-tight text-white" style={serifStyle}>
           "O'ziga bo'lgan ishonchni
         </h1>
-        <h1 className="text-4xl md:text-6xl lg:text-6xl leading-tight text-white" style={serifStyle}>
+        <h1 className="text-3xl md:text-6xl lg:text-6xl leading-tight text-white" style={serifStyle}>
           Maqsadlarga ta'siri"
         </h1>
       </div>
