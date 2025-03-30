@@ -10,7 +10,7 @@ export default function RegisterButton({ onRegister }: RegisterButtonProps) {
   const [isHovered, setIsHovered] = useState(false)
 
   return (
-    <div className="flex justify-center my-16 relative">
+    <div className="flex justify-center my-12 relative">
       {/* Animated background circles */}
       <div className="absolute -inset-10 z-0">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-indigo-600/20 rounded-full animate-ping-slow"></div>
@@ -65,7 +65,6 @@ export default function RegisterButton({ onRegister }: RegisterButtonProps) {
           {/* Animated border */}
           <div className="absolute inset-0 border-2 border-white/30 rounded-xl"></div>
 
-          
           <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 flex space-x-2">
             <div className="w-2 h-2 bg-white rounded-full animate-bounce-delay-1"></div>
             <div className="w-2 h-2 bg-white rounded-full animate-bounce-delay-2"></div>

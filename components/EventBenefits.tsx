@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 export default function EventBenefits() {
-  const [animate, setAnimate] = useState(false)
+  const [animate, setAnimate] = useState(true) // Set to true by default to avoid delay
 
   useEffect(() => {
     setAnimate(true)
@@ -97,11 +97,11 @@ export default function EventBenefits() {
 
   return (
     <div
-      className="mb-10 transform transition-all duration-700"
+      className="mb-10 transform transition-all duration-500"
       style={{
         transform: animate ? "translateY(0)" : "translateY(30px)",
         opacity: animate ? 1 : 0,
-        transitionDelay: "0.7s",
+        transitionDelay: "0.4s",
       }}
     >
       <h2 className="text-center text-3xl font-bold text-white mb-8 px-6 py-3 inline-block mx-auto bg-white/5 rounded-lg">
@@ -114,7 +114,7 @@ export default function EventBenefits() {
             key={index}
             className="p-6 flex items-start transition-all transform hover:scale-105 bg-white/5 rounded-lg"
             style={{
-              animation: `fadeSlideIn 0.6s ease-out ${0.8 + index * 0.2}s both`,
+              animation: `fadeSlideIn 0.4s ease-out ${0.5 + index * 0.1}s both`,
             }}
           >
             <div className="mr-4 mt-1 flex-shrink-0 text-white p-3 rounded-full">{benefit.icon}</div>

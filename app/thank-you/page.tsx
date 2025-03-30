@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import Image from "next/image"
-import BackgroundAnimation from "@/components/background-animation"
 
 export default function ThankYouPage() {
   const router = useRouter()
-  const [animate, setAnimate] = useState(false)
+  const [animate, setAnimate] = useState(true) // Set to true by default to avoid delay
   const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
@@ -19,30 +18,28 @@ export default function ThankYouPage() {
     // Redirect back to main page after a short delay
     setTimeout(() => {
       router.push("/")
-    }, 1000)
+    }, 500) // Reduced timeout for faster processing
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Background animation */}
-      <BackgroundAnimation />
-
       <div
-        className="text-center max-w-2xl z-10 p-10 rounded-2xl transform transition-all duration-1000 ease-out bg-white/5"
+        className="text-center max-w-2xl z-10 p-10 rounded-2xl transform transition-all duration-700 ease-out bg-white/5"
         style={{
           transform: animate ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
           opacity: animate ? 1 : 0,
         }}
       >
         <div className="w-40 h-40 mx-auto mb-6 relative">
-          <Image src="/logo.jpg" alt="Logo" fill style={{ objectFit: "contain" }} />
+          <Image src="/logo.jpg" alt="Logo" fill style={{ objectFit: "contain" }} priority />
         </div>
 
         <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 animate-fadeIn">Tabriklaymiz!</h1>
-        <p className="text-xl md:text-2xl text-white mb-8 animate-fadeIn" style={{ animationDelay: "0.3s" }}>
+        <p className="text-xl md:text-2xl text-white mb-8 animate-fadeIn" style={{ animationDelay: "0.2s" }}>
           Ro&apos;yhatdan o&apos;tganingiz bilan tabriklayman.
         </p>
-        <p className="text-xl md:text-2xl text-white mb-12 animate-fadeIn" style={{ animationDelay: "0.6s" }}>
+        <p className="text-xl md:text-2xl text-white mb-12 animate-fadeIn" style={{ animationDelay: "0.3s" }}>
           Oxirgi bosqichni bajaring va yopiq telegram kanalga qo&apos;shiling.
         </p>
 
@@ -51,7 +48,7 @@ export default function ThankYouPage() {
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
           className="relative animate-fadeIn overflow-hidden rounded-xl transition-all duration-500 transform hover:scale-105 animate-float-button"
-          style={{ animationDelay: "0.9s" }}
+          style={{ animationDelay: "0.4s" }}
         >
           {/* Gradient background */}
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-blue-500 to-purple-600 animate-gradient"></div>

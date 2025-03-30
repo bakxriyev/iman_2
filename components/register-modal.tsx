@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState, useRef, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { useToast } from '../hooks/toast'
 import axios from "axios"
 
 interface RegistrationModalProps {
@@ -21,6 +22,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState("")
   const router = useRouter()
+  const { toast } = useToast()
 
   const phoneInputRef = useRef<HTMLInputElement>(null)
   const tgInputRef = useRef<HTMLInputElement>(null)
@@ -101,31 +103,43 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     setLoading(true)
     setMessage("")
 
+    // Show toast notification
+    toast({
+      title: "Iltimos biroz kuting",
+      description: "Ma'lumotlaringiz yuborilmoqda...",
+      duration: 3000,
+    })
+
     try {
-      // Send data to the backend API
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, formData)
+      // Send data to the backend API - using a timeout to simulate faster processing
+      setTimeout(async () => {
+        try {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, formData)
 
-      // Call the onSubmit prop to maintain compatibility with parent component
-      await onSubmit(formData)
+          // Call the onSubmit prop to maintain compatibility with parent component
+          await onSubmit(formData)
 
-      // Reset form after successful submission
-      setFormData({
-        full_name: "",
-        phone_number: "+998",
-        tg_user: "@",
-      })
+          // Reset form after successful submission
+          setFormData({
+            full_name: "",
+            phone_number: "+998",
+            tg_user: "@",
+          })
 
-      // Show success message briefly before redirecting
-      setMessage("Muvaffaqiyatli ro'yxatdan o'tdingiz!")
+          // Show success message briefly before redirecting
+          setMessage("Muvaffaqiyatli ro'yxatdan o'tdingiz!")
 
-      // Redirect to thank you page after successful submission
-      setTimeout(() => {
-        router.push("/thank-you")
-      }, 1000)
+          // Redirect to thank you page after successful submission
+          router.push("/thank-you")
+        } catch (error) {
+          console.error("Registration error:", error)
+          setMessage("Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.")
+          setLoading(false)
+        }
+      }, 500) // Reduced timeout for faster processing
     } catch (error) {
       console.error("Registration error:", error)
       setMessage("Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.")
-    } finally {
       setLoading(false)
     }
   }

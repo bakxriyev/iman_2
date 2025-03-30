@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 
 export default function Header() {
-  const [animate, setAnimate] = useState(false)
+  const [animate, setAnimate] = useState(true) // Set to true by default to avoid delay
 
   useEffect(() => {
     setAnimate(true)
@@ -17,7 +17,7 @@ export default function Header() {
           style={{
             transform: animate ? "translateX(0)" : "translateX(-50px)",
             opacity: animate ? 1 : 0,
-            transition: "all 0.6s ease-out",
+            transition: "all 0.4s ease-out",
           }}
         >
           <svg
@@ -44,7 +44,7 @@ export default function Header() {
           style={{
             transform: animate ? "translateX(0)" : "translateX(50px)",
             opacity: animate ? 1 : 0,
-            transition: "all 0.6s ease-out",
+            transition: "all 0.4s ease-out",
           }}
         >
           <svg

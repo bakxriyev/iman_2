@@ -3,11 +3,19 @@
 import { useEffect, useState } from "react"
 
 export default function EventInfo() {
-  const [animate, setAnimate] = useState(false)
+  const [animate, setAnimate] = useState(true) // Set to true by default to avoid delay
 
   useEffect(() => {
     setAnimate(true)
   }, [])
+
+  const topics = [
+    "Nega Maqsadlarga erishish QIYINDEK tuyiladi?",
+    "O'ziga bo'lgan ishonch Muvaffaqiyat kaliti",
+    "Dangasalikning kelib chiqish sabablari?",
+    "Intizomga qanday qilib erishish mumkin?",
+    "Maqsad yo'lida \"Fail\" bo'lishning asl sabablari",
+  ]
 
   return (
     <>
@@ -17,27 +25,21 @@ export default function EventInfo() {
         </h2>
       </div>
       <div
-        className="mb-10 transform transition-all duration-700"
+        className="mb-10 transform transition-all duration-500"
         style={{
           transform: animate ? "translateY(0)" : "translateY(30px)",
           opacity: animate ? 1 : 0,
-          transitionDelay: "0.5s",
+          transitionDelay: "0.3s",
         }}
       >
         <ul className="space-y-4">
-          {[
-            "Nega Maqsadlarga erishish QIYINDEK tuyiladi?",
-            "O'ziga bo'lgan ishonch Muvaffaqiyat kaliti",
-            "Dangasalikning kelib chiqish sabablari?",
-            "Intizomga qanday qilib erishish mumkin?",
-            "Maqsad yo'lida \"Fail\" bo'lishning asl sabablari",
-          ].map((topic, index) => (
+          {topics.map((topic, index) => (
             <li
               key={index}
               className="flex items-start p-5 transition-all transform hover:translate-x-1 bg-white/5 rounded-lg"
               style={{
-                transitionDelay: `${0.1 * index}s`,
-                animation: `fadeSlideIn 0.6s ease-out ${0.3 + index * 0.2}s both`,
+                transitionDelay: `${0.05 * index}s`,
+                animation: `fadeSlideIn 0.4s ease-out ${0.2 + index * 0.1}s both`,
               }}
             >
               <div className="mr-4 mt-1 text-white">

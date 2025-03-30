@@ -1,19 +1,23 @@
 import type React from "react"
 import "./globals.css"
+import type { Metadata } from "next"
+import { ToastProvider } from "@/hooks/toast"
 
-export const metadata = {
-  title: "Maqsadlarga erishish - Jonli Vebinar",
-  description: "Jonli bepul vebinar davomida dangasalikdan qutilish va maqsadlarga erishish yo'llari",
+export const metadata: Metadata = {
+  title: "O'ziga bo'lgan ishonchni Maqsadlarga ta'siri",
+  description: "17-18 aprel, soat 20:00 da bo'lib o'tadigan jonli vebinar",
 }
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
     <html lang="uz">
-      <body>{children}</body>
+      <body>
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   )
 }
