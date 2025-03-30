@@ -1,17 +1,36 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
+import { useToast } from '../../hooks/toast'
 
 export default function ThankYouPage() {
   const router = useRouter()
   const [animate, setAnimate] = useState(true) // Set to true by default to avoid delay
   const [isHovered, setIsHovered] = useState(false)
 
+  const searchParams = useSearchParams()
+  const { toast } = useToast()
+  const isPending = searchParams.get("pending") === "true"
+
+  // Run only once when component mounts
   useEffect(() => {
     setAnimate(true)
-  }, [])
+
+    // Show success toast when the page loads with pending=true
+    if (isPending) {
+      // Use setTimeout to ensure this doesn't cause a re-render loop
+      setTimeout(() => {
+        toast({
+          title: "Muvaffaqiyatli ro'yxatdan o'tdingiz!",
+          description: "Ma'lumotlaringiz muvaffaqiyatli yuborildi.",
+          duration: 5000,
+        })
+      }, 100)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []) // Empty dependency array ensures it only runs once
 
   const handleJoinTelegram = () => {
     window.open("https://t.me/+sjPXaaS97QU5NWJi", "_blank")
@@ -23,7 +42,7 @@ export default function ThankYouPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-950 via-purple-900 to-indigo-950 flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Background animation */}
+
       <div
         className="text-center max-w-2xl z-10 p-10 rounded-2xl transform transition-all duration-700 ease-out bg-white/5"
         style={{

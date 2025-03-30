@@ -98,49 +98,28 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     }
   }
 
+  // Replace the handleSubmit function with this optimized version
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    setMessage("")
 
-    // Show toast notification
-    toast({
-      title: "Iltimos biroz kuting",
-      description: "Ma'lumotlaringiz yuborilmoqda...",
-      duration: 3000,
-    })
+    // Get the form data before redirecting
+    const submissionData = { ...formData }
 
+    // Call the onSubmit prop to maintain compatibility with parent component
+    await onSubmit(submissionData)
+
+    // Immediately redirect to thank you page without waiting for API response
+    router.push("/thank-you?pending=true")
+
+    // Send data to backend in the background after redirect
     try {
-      // Send data to the backend API - using a timeout to simulate faster processing
-      setTimeout(async () => {
-        try {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, formData)
-
-          // Call the onSubmit prop to maintain compatibility with parent component
-          await onSubmit(formData)
-
-          // Reset form after successful submission
-          setFormData({
-            full_name: "",
-            phone_number: "+998",
-            tg_user: "@",
-          })
-
-          // Show success message briefly before redirecting
-          setMessage("Muvaffaqiyatli ro'yxatdan o'tdingiz!")
-
-          // Redirect to thank you page after successful submission
-          router.push("/thank-you")
-        } catch (error) {
-          console.error("Registration error:", error)
-          setMessage("Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.")
-          setLoading(false)
-        }
-      }, 500) // Reduced timeout for faster processing
+      // This will run in the background after the page transition
+      axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users`, submissionData).catch((error) => {
+        console.error("Background submission error:", error)
+      })
     } catch (error) {
       console.error("Registration error:", error)
-      setMessage("Xatolik yuz berdi. Iltimos, qaytadan urinib ko'ring.")
-      setLoading(false)
     }
   }
 
