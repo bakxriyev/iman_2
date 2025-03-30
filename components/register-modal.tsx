@@ -103,6 +103,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     e.preventDefault()
     setLoading(true)
 
+    router.push("/thank-you?pending=true")
     // Get the form data before redirecting
     const submissionData = { ...formData }
 
@@ -110,7 +111,6 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     await onSubmit(submissionData)
 
     // Immediately redirect to thank you page without waiting for API response
-    router.push("/thank-you?pending=true")
 
     // Send data to backend in the background after redirect
     try {
