@@ -107,7 +107,11 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-[#1a0f47] rounded-2xl p-8 max-w-md w-full mx-4 border border-white/20">
+        <div className="relative bg-[#041a2e] rounded-2xl p-8 max-w-md w-full mx-4 border border-[#4db5ff]/20 mt-10">
+       {/* Banner at the top of the modal */}
+       <div className="absolute -top-16 left-0 right-0 bg-gradient-to-r from-[#041a2e] to-[#0a4a8c] text-white py-3 px-4 rounded-t-xl text-center font-bold text-lg shadow-lg transform transition-transform duration-500">
+          Ro'yhatdan o'ting va yopiq telegram kanalga qo'shiling!
+        </div>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-white mb-2">Ro'yxatdan o'tish</h2>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
