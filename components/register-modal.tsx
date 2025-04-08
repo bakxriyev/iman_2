@@ -2,12 +2,11 @@
 
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
-import { useRouter } from "next/navigation"
 
 interface RegistrationModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (data: { full_name: string; phone_number: string; tg_user: string }) => Promise<void>
+  onSubmit: (data: { full_name: string; phone_number: string; tg_user: string }) => void
 }
 
 export default function RegistrationModal({ isOpen, onClose, onSubmit }: RegistrationModalProps) {
@@ -17,7 +16,6 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     tg_user: "",
   })
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const phoneInputRef = useRef<HTMLInputElement>(null)
 
@@ -82,17 +80,12 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     }
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
 
-    try {
-      await onSubmit(formData)
-    } catch (error) {
-      console.error("Registration error:", error)
-    } finally {
-      setLoading(false)
-    }
+    // Submit the form data to parent component
+    onSubmit(formData)
   }
 
   // Focus cursor at the end of the prefilled value when input is focused
@@ -107,13 +100,14 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
-        <div className="relative bg-[#041a2e] rounded-2xl p-8 max-w-md w-full mx-4 border border-[#4db5ff]/20 mt-10">
-       {/* Banner at the top of the modal */}
-       <div className="absolute -top-16 left-0 right-0 bg-gradient-to-r from-[#041a2e] to-[#0a4a8c] text-white py-3 px-4 rounded-t-xl text-center font-bold text-lg shadow-lg transform transition-transform duration-500">
+      <div className="relative bg-[#041a2e] rounded-2xl p-8 max-w-md w-full mx-4 border border-[#4db5ff]/20 mt-10">
+        {/* Banner at the top of the modal */}
+        <div className="absolute -top-16 left-0 right-0 bg-gradient-to-r from-[#041a2e] to-[#0a4a8c] text-white py-3 px-4 rounded-t-xl text-center font-bold text-lg shadow-lg transform transition-transform duration-500">
           Ro'yhatdan o'ting va yopiq telegram kanalga qo'shiling!
         </div>
+
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-white mb-2">Ro'yxatdan o'tish</h2>
+          <h2 className="text-2xl font-bold text-[#4db5ff] mb-2">Ro'yxatdan o'tish</h2>
           <button onClick={onClose} className="text-white/70 hover:text-white transition-colors">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +130,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
             <label htmlFor="full_name" className="text-white/80 text-sm flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-2 text-white"
+                className="h-4 w-4 mr-2 text-[#4db5ff]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -155,7 +149,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
               value={formData.full_name}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:ring-2 focus:ring-[#e91e63]/50 text-white placeholder-white/50"
+              className="w-full px-4 py-3 bg-[#0a2a4a]/60 border border-[#4db5ff]/20 rounded-lg focus:ring-2 focus:ring-[#4db5ff]/50 text-white placeholder-white/50"
               placeholder="Ism va familiya"
             />
           </div>
@@ -164,7 +158,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
             <label htmlFor="phone_number" className="text-white/80 text-sm flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-2 text-white"
+                className="h-4 w-4 mr-2 text-[#4db5ff]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -186,7 +180,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
               onSelect={(e) => handleSelect(e, "+998")}
               onFocus={handleFocus}
               required
-              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:ring-2 focus:ring-[#e91e63]/50 text-white placeholder-white/50"
+              className="w-full px-4 py-3 bg-[#0a2a4a]/60 border border-[#4db5ff]/20 rounded-lg focus:ring-2 focus:ring-[#4db5ff]/50 text-white placeholder-white/50"
               placeholder="+998 XX XXX XX XX"
             />
           </div>
@@ -195,7 +189,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
             <label htmlFor="tg_user" className="text-white/80 text-sm flex items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-2 text-white"
+                className="h-4 w-4 mr-2 text-[#4db5ff]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -213,17 +207,17 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
               name="tg_user"
               value={formData.tg_user}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg focus:ring-2 focus:ring-[#e91e63]/50 text-white placeholder-white/50"
+              className="w-full px-4 py-3 bg-[#0a2a4a]/60 border border-[#4db5ff]/20 rounded-lg focus:ring-2 focus:ring-[#4db5ff]/50 text-white placeholder-white/50"
               placeholder="@username"
             />
           </div>
 
           <button type="submit" disabled={loading} className="relative w-full">
-            <div className="relative bg-[#e91e63] rounded-lg py-3 px-6 flex items-center justify-center">
+            <div className="relative bg-[#4db5ff] rounded-lg py-3 px-6 flex items-center justify-center">
               {loading ? (
                 <>
                   <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-[#041a2e]"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
@@ -242,10 +236,10 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  <span className="text-white font-bold">Yuborilmoqda...</span>
+                  <span className="text-[#041a2e] font-bold">Yuborilmoqda...</span>
                 </>
               ) : (
-                <span className="text-white font-bold">Yuborish</span>
+                <span className="text-[#041a2e] font-bold">Yuborish</span>
               )}
             </div>
           </button>
