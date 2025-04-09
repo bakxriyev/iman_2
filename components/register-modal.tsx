@@ -185,32 +185,7 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
             />
           </div>
 
-          <div className="space-y-2">
-            <label htmlFor="tg_user" className="text-white/80 text-sm flex items-center">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4 mr-2 text-[#4db5ff]"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81z"></path>
-                <polygon points="10 15 15 12 10 9 10 15"></polygon>
-              </svg>
-              Telegram username (ixtiyoriy)
-            </label>
-            <input
-              id="tg_user"
-              name="tg_user"
-              value={formData.tg_user}
-              onChange={handleChange}
-              className="w-full px-4 py-3 bg-[#0a2a4a]/60 border border-[#4db5ff]/20 rounded-lg focus:ring-2 focus:ring-[#4db5ff]/50 text-white placeholder-white/50"
-              placeholder="@username"
-            />
-          </div>
+          
 
           <button type="submit" disabled={loading} className="relative w-full">
             <div className="relative bg-[#4db5ff] rounded-lg py-3 px-6 flex items-center justify-center">
