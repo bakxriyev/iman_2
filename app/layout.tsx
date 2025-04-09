@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="uz">
       <head>
-       
+      <meta name="facebook-domain-verification" content="65jfbkql08wmrcp5o23nz0v9ogsw1y" />
       </head>
       <body>
         {children}

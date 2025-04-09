@@ -1,9 +1,8 @@
 "use client"
 
-
 import { useState } from "react"
 import Image from "next/image"
-import { useToast} from '../hooks/use_toast'
+import { useToast } from "@/hooks/use_toast"
 import RegistrationModal from "./register-modal"
 import { useRouter } from "next/navigation"
 import axios from "axios"
@@ -20,7 +19,6 @@ export default function LandingPage() {
   const handleSubmit = async (data: {
     full_name: string
     phone_number: string
-    tg_user: string
   }) => {
     // Close the modal immediately
     setIsModalOpen(false)
@@ -35,12 +33,28 @@ export default function LandingPage() {
     // Redirect immediately without waiting for API response
     router.push("/thank-you?pending=true")
 
+    // Prepare data for backend - ensure we include all required fields
+    const apiData = {
+      full_name: data.full_name,
+      phone_number: data.phone_number,
+      tg_user: "", // Send empty array instead of empty string
+      email: "", // Include empty email field if backend expects it
+      source: "website", // Add source information
+    }
+
     // Send data to backend in the background after redirect
     try {
       // This will run in the background after the page transition
-      axios.post(`${process.env.NEXT_PUBLIC_API_URL || "/api"}/users`, data).catch((error) => {
-        console.error("Background submission error:", error)
-      })
+      axios
+        .post("https://backend.imanakhmedovna.uz/users", apiData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .catch((error) => {
+          console.error("Background submission error:", error)
+          // Log more detailed error information
+        })
     } catch (error) {
       console.error("Registration error:", error)
     }
@@ -49,13 +63,13 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#1a0f47] relative">
+    <div className="min-h-screen bg-[#2a1e1a] relative">
       {/* Background grid */}
       <div className="bg-grid absolute inset-0 z-0 opacity-30"></div>
 
       {/* Glowing orbs */}
-      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-[#e91e63] opacity-5 blur-[100px]"></div>
-      <div className="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-[#9c27b0] opacity-5 blur-[100px]"></div>
+      <div className="absolute top-20 left-20 w-64 h-64 rounded-full bg-[#e8c7b9] opacity-10 blur-[100px]"></div>
+      <div className="absolute bottom-20 right-20 w-80 h-80 rounded-full bg-[#d4a89a] opacity-10 blur-[100px]"></div>
 
       {/* Content container */}
       <div className="relative z-10 container mx-auto px-4 py-8 min-h-screen flex flex-col">
@@ -100,14 +114,17 @@ export default function LandingPage() {
 
         {/* Main content */}
         <main className="flex-1 flex flex-col items-center">
-          {/* Logo and title */}
-          <div className="text-center mb-12">
-            <div className="relative w-40 h-40 mx-auto mb-6">
+          {/* Image and title */}
+          <div className="text-center mb-12 w-full">
+            <div className="relative w-full max-w-2xl mx-auto mb-8 aspect-[4/3] overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2a1e1a] via-transparent to-transparent z-10"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#2a1e1a]/30 via-transparent to-[#2a1e1a]/30 z-10"></div>
               <Image
-                src="/logo.jpg"
-                alt="Logo"
+                src="/iman.jpg"
+                alt="Iman Akhmedova"
                 fill
-                className="object-contain rounded-full border border-white/20"
+                style={{ objectFit: "cover", objectPosition: "center 20%" }}
+                className="rounded-xl border border-[#e8c7b9]/20 shadow-lg"
                 priority
               />
             </div>
@@ -115,13 +132,11 @@ export default function LandingPage() {
             <div className="inline-block mb-2 px-4 py-2 bg-white/5 rounded-full">
               <div className="flex items-center justify-center gap-2">
                 <span className="text-white font-bold">BEPUL VEBINAR</span>
-                <span className="bg-[#e91e63] text-white px-2 py-0.5 text-xs font-bold rounded-md">LIVE</span>
+                <span className="bg-[#d4a89a] text-white px-2 py-0.5 text-xs font-bold rounded-md">LIVE</span>
               </div>
             </div>
 
-              <h1 className="text-xl md:text-5xl  mb-2 text-white">
-                Iman Akhmedovnadan 2 kunlik Bepul Vebinar
-              </h1>
+            <h1 className="text-xl md:text-5xl mb-2 text-white">Iman Akhmedovnadan 2 kunlik Bepul Vebinar</h1>
             <div className="mt-4 bg-white/5 p-4 rounded-2xl border border-white/20">
               <h1 className="text-3xl md:text-5xl font-bold text-white">"Ibodatlarda Dangasalikka Nuqta Qo'yamiz"</h1>
             </div>
@@ -130,7 +145,7 @@ export default function LandingPage() {
           {/* Registration button */}
           <div className="flex justify-center my-10">
             <button onClick={handleRegister} className="relative">
-              <div className="relative bg-[#e91e63] rounded-lg px-8 py-4 flex items-center space-x-3">
+              <div className="relative bg-[#d4a89a] rounded-lg px-8 py-4 flex items-center space-x-3">
                 <span className="text-white font-bold text-xl">ISHTIROK ETISH</span>
                 <div className="bg-white/20 px-2 py-1 rounded-md text-white text-sm font-bold">BEPUL</div>
               </div>
@@ -150,7 +165,7 @@ export default function LandingPage() {
                   "Hayotni tartiblagan holda Maqsadlarga erishish usullarini o'rganasiz",
                 ].map((topic, index) => (
                   <li key={index} className="flex items-center bg-white/5 p-4 rounded-xl">
-                    <div className="mr-4 flex-shrink-0 bg-[#e91e63]/10 p-2 rounded-lg">
+                    <div className="mr-4 flex-shrink-0 bg-[#d4a89a]/20 p-2 rounded-lg">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6 text-white"
@@ -174,7 +189,7 @@ export default function LandingPage() {
             {/* Registration button */}
             <div className="flex justify-center my-10">
               <button onClick={handleRegister} className="relative">
-                <div className="relative bg-[#e91e63] rounded-lg px-8 py-4 flex items-center space-x-3">
+                <div className="relative bg-[#d4a89a] rounded-lg px-8 py-4 flex items-center space-x-3">
                   <span className="text-white font-bold text-xl">ISHTIROK ETISH</span>
                   <div className="bg-white/20 px-2 py-1 rounded-md text-white text-sm font-bold">BEPUL</div>
                 </div>
@@ -185,7 +200,7 @@ export default function LandingPage() {
 
         {/* Footer */}
         <footer className="text-center text-white/50 py-4">
-          <p>© 2025 Jonli Vebinar. Barcha huquqlar himoyalangan.</p>
+          <p>This site or product is not part of or endorsed by Facebook, Google, or any social media platform in any way FACEBOOK is a trademark of META PLATFORMS, Inc. YOUTUBE and GOOGLE are trademarks of ALPHABET, Inc..</p>
         </footer>
       </div>
 
