@@ -120,7 +120,7 @@ export default function LandingPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#2a1e1a] via-transparent to-transparent z-10"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-[#2a1e1a]/30 via-transparent to-[#2a1e1a]/30 z-10"></div>
               <Image
-                src="/iman.jpg"
+                src="/imann.jpg"
                 alt="Iman Akhmedova"
                 fill
                 style={{ objectFit: "cover", objectPosition: "center 20%" }}
