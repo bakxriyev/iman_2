@@ -2,14 +2,12 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { useToast } from "@/hooks/use_toast"
 import RegistrationModal from "./register-modal"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const { toast } = useToast()
   const router = useRouter()
 
   const handleRegister = () => {
@@ -23,12 +21,7 @@ export default function LandingPage() {
     // Close the modal immediately
     setIsModalOpen(false)
 
-    // Show toast and redirect immediately to thank-you page
-    toast({
-      title: "Muvaffaqiyatli ro'yxatdan o'tdingiz!",
-      description: "Ma'lumotlaringiz yuborilmoqda...",
-      duration: 3000,
-    })
+  
 
     // Redirect immediately without waiting for API response
     router.push("/thank-you?pending=true")
@@ -46,7 +39,7 @@ export default function LandingPage() {
     try {
       // This will run in the background after the page transition
       axios
-        .post("https://backend.imanakhmedovna.uz/users", apiData, {
+        .post("https://orqa.imanakhmedovna.uz/users", apiData, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -91,7 +84,7 @@ export default function LandingPage() {
               <line x1="8" x2="8" y1="2" y2="6" />
               <line x1="3" x2="21" y1="10" y2="10" />
             </svg>
-            <span className="text-white/90 font-medium">17-18 APREL</span>
+            <span className="text-white/90 font-medium">2,3,4 - SENTABR</span>
           </div>
 
           <div className="flex items-center space-x-2 bg-white/5 px-4 py-2 rounded-full">
@@ -136,9 +129,11 @@ export default function LandingPage() {
               </div>
             </div>
 
-            <h1 className="text-xl md:text-5xl mb-2 text-white">Iman Akhmedovnadan 2 kunlik Bepul Vebinar</h1>
+            <h1 className="text-xl md:text-5xl mb-2 text-white">Iman Akhmedovnadan 3 kunlik Bepul Vebinar</h1>
             <div className="mt-4 bg-white/5 p-4 rounded-2xl border border-white/20">
-              <h1 className="text-3xl md:text-5xl font-bold text-white">"Ibodatlarda Dangasalikka Nuqta Qo'yamiz"</h1>
+              <h1 className="text-3xl md:text-5xl font-bold text-white">
+                "Dangasalikdan Halos Bo'lishning 3 Ta Yo'li"
+              </h1>
             </div>
           </div>
 
@@ -155,17 +150,31 @@ export default function LandingPage() {
           {/* Webinar topics */}
           <div className="w-full max-w-4xl mb-12">
             <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/20">
-              <h2 className="text-xl md:text-2xl font-bold mb-6 text-center text-white">Vebinarda Siz:</h2>
+              <h2 className="text-xl md:text-2xl font-bold mb-6 text-center text-white">
+                Jonli Bepul Vebinar Davomida Quyidagilar Haqida Gaplashamiz:
+              </h2>
 
               <ul className="space-y-3">
                 {[
-                  "Ibodatlarda nega sust bo'lib qolish sabablarini",
-                  "Ibodatlarda intizomli bo'lishga qanday erishish mumkinligini",
-                  "Dangasalikning kelib chiqish sabablarini aniqlab, Hayotni tartiblashni",
-                  "Hayotni tartiblagan holda Maqsadlarga erishish usullarini o'rganasiz",
+                  {
+                    title: "Nima uchun dangasalik kasaliga chalinamiz?",
+                    subtitle: "Dangasalikning asosiy sabablari va ularni aniqlash usullari",
+                  },
+                  {
+                    title: "Dangasalikning ichki ruhiy sabablari nima?",
+                    subtitle: "Psixologik omillar va ularning ta'siri",
+                  },
+                  {
+                    title: "Dangasalikning hech kim bilmaydigan eng muhim omili",
+                    subtitle: "Yashirin sabab va uni bartaraf etish yo'llari",
+                  },
+                  {
+                    title: "O'zgarishga harakat qilish, lekin uddalay olmaslikning psixologik omillari",
+                    subtitle: "Nima uchun muvaffaqiyatsizlikka uchraymiz va qanday yengish mumkin",
+                  },
                 ].map((topic, index) => (
-                  <li key={index} className="flex items-center bg-white/5 p-4 rounded-xl">
-                    <div className="mr-4 flex-shrink-0 bg-[#d4a89a]/20 p-2 rounded-lg">
+                  <li key={index} className="flex items-start bg-white/5 p-4 rounded-xl">
+                    <div className="mr-4 flex-shrink-0 bg-[#d4a89a]/20 p-2 rounded-lg mt-1">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6 text-white"
@@ -180,7 +189,59 @@ export default function LandingPage() {
                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
                       </svg>
                     </div>
-                    <span className="text-white/90 text-lg">{topic}</span>
+                    <div className="flex-1">
+                      <span className="text-white font-semibold text-lg block mb-1">{topic.title}</span>
+                      <span className="text-white/70 text-sm">{topic.subtitle}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Benefits section */}
+            <div className="bg-white/5 rounded-2xl p-6 mb-8 border border-white/20">
+              <h2 className="text-xl md:text-2xl font-bold mb-6 text-center text-white">
+                Bepul Vebinardan Qanday Foydalar Olasiz:
+              </h2>
+
+              <ul className="space-y-3">
+                {[
+                  {
+                    title: "Dangasalikdan qutilish uchun eng ishlaydigan texnikalar",
+                    subtitle: "Amaliy usullar va kundalik hayotda qo'llash yo'llari",
+                  },
+                  {
+                    title: "Tuganmas energiya holatida yashash siri",
+                    subtitle: "Doimiy motivatsiya va faollik uchun maxsus texnikalar",
+                  },
+                  {
+                    title: "Dangasalikdan 1 kunda halos qiladigan 1 ta amal va duo",
+                    subtitle: "Tezkor natija beruvchi maxsus uslub",
+                  },
+                  {
+                    title: "O'zini prorabotka qilish orqali halovatda yashashni boshlash",
+                    subtitle: "Ichki o'zgarish va ruhiy poklanish yo'llari",
+                  },
+                ].map((benefit, index) => (
+                  <li key={index} className="flex items-start bg-white/5 p-4 rounded-xl">
+                    <div className="mr-4 flex-shrink-0 bg-[#d4a89a]/20 p-2 rounded-lg mt-1">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6 text-white"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                      </svg>
+                    </div>
+                    <div className="flex-1">
+                      <span className="text-white font-semibold text-lg block mb-1">{benefit.title}</span>
+                      <span className="text-white/70 text-sm">{benefit.subtitle}</span>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -200,7 +261,10 @@ export default function LandingPage() {
 
         {/* Footer */}
         <footer className="text-center text-white/50 py-4">
-          <p>This site or product is not part of or endorsed by Facebook, Google, or any social media platform in any way FACEBOOK is a trademark of META PLATFORMS, Inc. YOUTUBE and GOOGLE are trademarks of ALPHABET, Inc..</p>
+          <p>
+            This site or product is not part of or endorsed by Facebook, Google, or any social media platform in any way
+            FACEBOOK is a trademark of META PLATFORMS, Inc. YOUTUBE and GOOGLE are trademarks of ALPHABET, Inc..
+          </p>
         </footer>
       </div>
 

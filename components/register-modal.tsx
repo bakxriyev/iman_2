@@ -6,16 +6,17 @@ import { useState, useRef, useEffect } from "react"
 interface RegistrationModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (data: { full_name: string; phone_number: string }) => void
+  onSubmit: (data: { full_name: string; phone_number: string; tg_user: string }) => void
 }
 
 export default function RegistrationModal({ isOpen, onClose, onSubmit }: RegistrationModalProps) {
   const [formData, setFormData] = useState({
     full_name: "",
     phone_number: "+998",
+    tg_user: "",
   })
   const [loading, setLoading] = useState(false)
-
+  const [error, setError] = useState<string | null>(null)
   const phoneInputRef = useRef<HTMLInputElement>(null)
 
   // Reset form when modal opens
@@ -24,18 +25,20 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
       setFormData({
         full_name: "",
         phone_number: "+998",
+        tg_user: "",
       })
+      setError(null)
     }
   }, [isOpen])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
+    setError(null) // Clear error when user starts typing
 
     // Handle phone number prefix and restrict to numbers only
     if (name === "phone_number") {
       // Remove any non-numeric characters except the +
       const numericValue = value.replace(/[^\d+]/g, "")
-
       if (!numericValue.startsWith("+998")) {
         // If user deletes the prefix, keep it
         setFormData((prev) => ({ ...prev, [name]: "+998" + numericValue.replace("+998", "") }))
@@ -101,7 +104,6 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
   const handleSelect = (e: React.SyntheticEvent<HTMLInputElement>, prefix: string) => {
     const input = e.currentTarget
     const selectionStart = input.selectionStart || 0
-
     if (selectionStart < prefix.length) {
       setTimeout(() => {
         input.setSelectionRange(prefix.length, input.selectionEnd || prefix.length)
@@ -109,12 +111,57 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setError(null)
 
-    // Submit the form data to parent component
+    // Immediately call onSubmit to redirect to thank you page
     onSubmit(formData)
+
+    // Send data to backend asynchronously in the background
+    const sendToBackend = async () => {
+      try {
+        const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL
+
+        if (!backendUrl) {
+          console.warn("Backend URL not configured, skipping backend submission")
+          return
+        }
+
+        console.log("Sending data to backend:", backendUrl, formData)
+
+        const response = await fetch(`${backendUrl}/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            full_name: formData.full_name,
+            phone_number: formData.phone_number,
+            tg_user: formData.tg_user || null, // Send null if empty
+          }),
+        })
+
+        console.log("Response status:", response.status)
+
+        if (!response.ok) {
+          const errorText = await response.text()
+          console.error("Server error response:", errorText)
+          throw new Error(`Server error: ${response.status} - ${errorText}`)
+        }
+
+        const result = await response.json()
+        console.log("Success response:", result)
+      } catch (err) {
+        console.error("Background registration error:", err)
+        // Silently handle errors - user is already on thank you page
+      }
+    }
+
+    // Execute backend call in background
+    sendToBackend()
   }
 
   // Focus cursor at the end of the prefilled value when input is focused
@@ -132,7 +179,6 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
 
     if (pastedText !== numericText) {
       e.preventDefault()
-
       // Get the current value and selection
       const input = e.currentTarget
       const currentValue = input.value
@@ -165,12 +211,36 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
       <div className="relative bg-[#041a2e] rounded-2xl p-8 max-w-md w-full mx-4 border border-[#4db5ff]/20 mt-10">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white/70 hover:text-white transition-colors"
+          aria-label="Close modal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+
         {/* Banner at the top of the modal */}
         <div className="absolute -top-16 left-0 right-0 bg-gradient-to-r from-[#041a2e] to-[#0a4a8c] text-white py-3 px-4 rounded-t-xl text-center font-bold text-lg shadow-lg transform transition-transform duration-500">
           Davom etish uchun ma'lumotlaringizni kiriting
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          {error && (
+            <div className="bg-red-500/20 border border-red-500/50 text-red-200 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           <div className="space-y-2">
             <label htmlFor="full_name" className="text-white/80 text-sm flex items-center">
               <svg
@@ -231,6 +301,33 @@ export default function RegistrationModal({ isOpen, onClose, onSubmit }: Registr
               required
               className="w-full px-4 py-3 bg-[#0a2a4a]/60 border border-[#4db5ff]/20 rounded-lg focus:ring-2 focus:ring-[#4db5ff]/50 text-white placeholder-white/50"
               placeholder="+998 XX XXX XX XX"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="tg_user" className="text-white/80 text-sm flex items-center">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-4 w-4 mr-2 text-[#4db5ff]"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Telegram username (ixtiyoriy):
+            </label>
+            <input
+              id="tg_user"
+              name="tg_user"
+              value={formData.tg_user}
+              onChange={handleChange}
+              className="w-full px-4 py-3 bg-[#0a2a4a]/60 border border-[#4db5ff]/20 rounded-lg focus:ring-2 focus:ring-[#4db5ff]/50 text-white placeholder-white/50"
+              placeholder="@username"
             />
           </div>
 
