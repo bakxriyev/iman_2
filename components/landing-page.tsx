@@ -98,8 +98,6 @@ export default function LandingPage() {
               "DANGASALIKDAN QUTUL VA XOTIRJAM HAYOTDA YASHA"
             </h1>
 
-
-
             <div className="bg-gradient-to-r from-purple-600 to-purple-700 p-6 rounded-2xl mb-6">
               <p className="text-white font-medium font-sans text-lg leading-relaxed uppercase">
                 Qanday qilib kibr, dangasalik va qo'rquvlarni yengish orqali asliyatingizga qaytib, to'kis hayotda
@@ -119,8 +117,6 @@ export default function LandingPage() {
                   }}
                   className="opacity-80"
                 />
-              
-               
               </div>
             </div>
 
@@ -140,40 +136,45 @@ export default function LandingPage() {
             </button>
 
             <p className="text-white/60 text-sm mb-8 font-sans">Bepul qatnashish uchun bosing</p>
-<div className="bg-gray-900/50 p-6 rounded-2xl mb-6 border-gray-900">
-              <div className=" rounded-2xl p-6 mb-8 backdrop-blur-sm">
-              <div className="flex items-start space-x-4">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-full overflow-hidden border-2">
-                    <Image
-                      src="/imann.jpg"
-                      alt="Iman Akhmedova"
-                      width={48}
-                      height={48}
-                      className="w-full h-full object-cover"
-                      style={{ objectPosition: "center 30%" }}
-                    />
-                  </div>
+            <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-gray-800">
+              <div className="text-center">
+                <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gray-700">
+                  <Image
+                    src="/imann.jpg"
+                    alt="Iman Akhmedova"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-cover"
+                    style={{ objectPosition: "center 30%" }}
+                  />
                 </div>
-                <div className="flex-1 text-left">
-                  <div className="flex items-center space-x-2 mb-2">
-                    <h3 className="text-white font-semibold font-sans">Iman Akhmedova</h3>
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                  </div>
-                  <div className="bg-purple-600/20 rounded-2xl rounded-tl-sm p-6 border-l-4 border-purple-500">
-                    <div className="text-white font-sans leading-relaxed space-y-1">
-                      <p>• Oilaviy munosabatlar va bolalar psixologi</p>
-                      <p>• Prezidentimiz tomonidan taqdirlangan 30 yillik ko'krak nishoni sohibasi</p>
-                      <p>• 3 yillik tajriba</p>
-                      <p>• 50.000 dan ortiq o'quvchilar</p>
-                      <p>• Psixologlar assotsiatsiyasi a'zosi</p>
-                      <p>• PHD mustaqil izlanuvchisi</p>
-                    </div>
-                  </div>
+                <h3 className="text-white font-bold text-xl mb-6 font-sans">IMAN AHMEDOVA</h3>
+                <div className="text-white/90 font-sans leading-relaxed space-y-3 text-left">
+                  <p>• Oilaviy munosabatlar va bolalar psixologi</p>
+                  <p>• Prezidentimiz tomonidan taqdirlangan 30 yillik ko'krak nishoni sohibasi</p>
+                  <p>• 3 yillik tajriba</p>
+                  <p>• 50.000 dan ortiq o'quvchilar</p>
+                  <p>• Psixologlar assotsiatsiyasi a'zosi</p>
+                  <p>• PHD mustaqil izlanuvchisi</p>
                 </div>
               </div>
             </div>
-            </div>
+            <button onClick={handleRegister} className="w-full mb-8">
+              <div className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 rounded-2xl px-8 py-6 flex items-center justify-center space-x-3 shadow-lg hover:shadow-2xl transform hover:scale-105">
+                <span className="text-white font-bold text-xl font-sans uppercase">YOPIQ KANALGA QO'SHILISH</span>
+                <div className="bg-white/20 p-2 rounded-full">
+                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                      fillRule="evenodd"
+                      d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </button>
+            <p className="text-white/60 text-sm mb-8 font-sans">Bepul qatnashish uchun bosing</p>
+            <br />
             <h2 className="text-white font-bold text-xl mb-6 font-sans uppercase">ONLAYN BEPUL DARSDA SIZ:</h2>
 
             <div className="space-y-4 mb-8 uppercase">
