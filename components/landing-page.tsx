@@ -140,16 +140,39 @@ export default function LandingPage() {
             </button>
 
             <p className="text-white/60 text-sm mb-8 font-sans">Bepul qatnashish uchun bosing</p>
-<div className="bg-gray-900/50 p-6 rounded-2xl mb-6 border border-gray-700">
-              <h3 className="text-white font-bold text-lg mb-4 font-sans">Iman Ahmedova</h3>
-              <div className="text-white/80 text-sm space-y-2 font-sans text-left uppercase">
-                <p>- Oilaviy munosabatlar va bolalar psixologi</p>
-                <p>- Prezidentimiz tomonidan taqdirlangan 30 yillik ko'krak nishoni sohibasi</p>
-                <p>- 3 yillik tajriba</p>
-                <p>- 50.000 dan ortiq o'quvchilar</p>
-                <p>- Psixologlar assotsiatsiyasi a'zosi</p>
-                <p>- PHD mustaqil izlanuvchisi</p>
+<div className="bg-gray-900/50 p-6 rounded-2xl mb-6 border-gray-900">
+              <div className=" rounded-2xl p-6 mb-8 backdrop-blur-sm">
+              <div className="flex items-start space-x-4">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 rounded-full overflow-hidden border-2">
+                    <Image
+                      src="/imann.jpg"
+                      alt="Iman Akhmedova"
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover"
+                      style={{ objectPosition: "center 30%" }}
+                    />
+                  </div>
+                </div>
+                <div className="flex-1 text-left">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <h3 className="text-white font-semibold font-sans">Iman Akhmedova</h3>
+                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                  </div>
+                  <div className="bg-purple-600/20 rounded-2xl rounded-tl-sm p-6 border-l-4 border-purple-500">
+                    <div className="text-white font-sans leading-relaxed space-y-1">
+                      <p>• Oilaviy munosabatlar va bolalar psixologi</p>
+                      <p>• Prezidentimiz tomonidan taqdirlangan 30 yillik ko'krak nishoni sohibasi</p>
+                      <p>• 3 yillik tajriba</p>
+                      <p>• 50.000 dan ortiq o'quvchilar</p>
+                      <p>• Psixologlar assotsiatsiyasi a'zosi</p>
+                      <p>• PHD mustaqil izlanuvchisi</p>
+                    </div>
+                  </div>
+                </div>
               </div>
+            </div>
             </div>
             <h2 className="text-white font-bold text-xl mb-6 font-sans uppercase">ONLAYN BEPUL DARSDA SIZ:</h2>
 
