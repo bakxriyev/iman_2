@@ -182,7 +182,7 @@ export default function LandingPage() {
               }`}
             >
               <div className="text-center mb-6">
-                <h3 className="text-2xl font-serif font-bold text-white mb-2">Iman Akhmedova haqida</h3>
+                <h3 className="text-2xl font-serif font-bold text-white mb-2">Iman Akhmedova</h3>
                 <div className="w-20 h-1 bg-[#d4a89a] mx-auto rounded-full"></div>
               </div>
 
@@ -256,7 +256,7 @@ export default function LandingPage() {
                     </div>
                     <div>
                       <h3 className="text-white font-bold font-sans">Iman Akhmedova</h3>
-                      <p className="text-white/70 text-sm font-sans">Psixolog</p>
+                    
                     </div>
                     <div className="ml-auto">
                       <div className="w-2 h-2 bg-green-500 rounded-full"></div>
