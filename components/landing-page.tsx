@@ -43,7 +43,9 @@ export default function LandingPage() {
   }, [])
 
   const handleRegister = () => {
+    console.log("[v0] Register button clicked, opening modal")
     setIsModalOpen(true)
+    console.log("[v0] Modal state set to:", true)
   }
 
   const handleSubmit = async (data: {
@@ -81,15 +83,15 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-black relative">
       {/* Content container */}
-      <div className="relative z-10 container mx-auto px-4 py-8 min-h-screen flex flex-col">
-        <header className="flex justify-center items-center mb-8 mt-4">
+      <div className="relative z-10 container mx-auto px-4 py-2 min-h-screen flex flex-col">
+        {/* Main content */}
+        <header className="flex justify-center items-center mb-4">
           <div className="flex items-center space-x-2 bg-green-600 px-4 py-2 rounded-full">
             <div className="w-2 h-2 bg-white rounded-full"></div>
             <span className="text-white font-medium font-sans">2-3-4 sentabr | 20:00</span>
           </div>
         </header>
 
-        {/* Main content */}
         <main className="flex-1 flex flex-col items-center">
           <div className="text-center mb-12 w-full max-w-md mx-auto">
             <p className="text-white/80 text-sm mb-4 font-sans">Iman Ahmedovadan 3 kunlik BEPUL maxsus dars</p>
@@ -98,15 +100,15 @@ export default function LandingPage() {
               "DANGASALIKDAN QUTUL VA XOTIRJAM HAYOTDA YASHA"
             </h1>
 
-            <div className="bg-gradient-to-r from-purple-600 to-purple-700 p-6 rounded-2xl mb-6">
-              <p className="text-white font-medium font-sans text-lg leading-relaxed uppercase">
+            <div className="bg-gradient-to-r from-purple-600 to-purple-700 p-4 rounded-2xl mb-4">
+              <p className="text-white font-medium font-sans text-base leading-relaxed uppercase">
                 Qanday qilib kibr, dangasalik va qo'rquvlarni yengish orqali asliyatingizga qaytib, to'kis hayotda
                 yashashni 3 kunlik darsimda o'rgataman
               </p>
             </div>
 
-            <div className="relative mb-8">
-              <div className="relative w-full aspect-video bg-gradient-to-br from-purple-900 to-purple-700 rounded-2xl overflow-hidden">
+            <div className="relative mb-4">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden">
                 <Image
                   src="/imann.jpg"
                   alt="Video thumbnail"
@@ -115,12 +117,12 @@ export default function LandingPage() {
                     objectFit: "cover",
                     objectPosition: "center 20%",
                   }}
-                  className="opacity-80"
+                  className="opacity-100"
                 />
               </div>
             </div>
 
-            <button onClick={handleRegister} className="w-full mb-8">
+            <button onClick={handleRegister} className="w-full mb-8 -mt-2">
               <div className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-all duration-300 rounded-2xl px-8 py-6 flex items-center justify-center space-x-3 shadow-lg hover:shadow-2xl transform hover:scale-105">
                 <span className="text-white font-bold text-xl font-sans uppercase">YOPIQ KANALGA QO'SHILISH</span>
                 <div className="bg-white/20 p-2 rounded-full">
@@ -138,7 +140,7 @@ export default function LandingPage() {
             <p className="text-white/60 text-sm mb-8 font-sans">Bepul qatnashish uchun bosing</p>
             <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 mb-8 border border-gray-800">
               <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden border-2 border-gray-700">
+                <div className="w-24 h-24 mx-auto mb-6 rounded-full overflow-hidden">
                   <Image
                     src="/imann.jpg"
                     alt="Iman Akhmedova"
